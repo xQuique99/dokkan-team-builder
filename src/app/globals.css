@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,400;0,600;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Paleta Dokkan */
+  --gold:       #F5C542;
+  --gold-light: #FFE08A;
+  --gold-dark:  #C49A20;
+  --orange:     #E8773A;
+  --red:        #D93B2B;
+  --bg:         #0D0D0F;
+  --bg-card:    #16161C;
+  --bg-surface: #1E1E28;
+  --border:     rgba(245, 197, 66, 0.18);
+  --border-hover: rgba(245, 197, 66, 0.45);
+  --text:       #F0EDE4;
+  --text-muted: #7A7870;
+
+  /* Tipos de personaje */
+  --agl: #5BA8E5;
+  --teq: #52C27D;
+  --int: #9B6FD4;
+  --str: #E05C5C;
+  --phy: #CC8B3C;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Exo 2', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+/* Utilidades */
+.gold-text { color: var(--gold); }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--border-hover); }
+
+.type-badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.type-AGL { background: rgba(91,168,229,0.2); color: var(--agl); }
+.type-TEQ { background: rgba(82,194,125,0.2); color: var(--teq); }
+.type-INT { background: rgba(155,111,212,0.2); color: var(--int); }
+.type-STR { background: rgba(224,92,92,0.2);  color: var(--str); }
+.type-PHY { background: rgba(204,139,60,0.2); color: var(--phy); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
