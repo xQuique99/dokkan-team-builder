@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
@@ -22,6 +21,7 @@ export interface ApiCard {
   link_names: string | null;
   leader_skill: string | null;
   assets: string[];
+  release_date: string | null; 
 }
 
 interface DokkanCategory {
@@ -66,17 +66,21 @@ async function fetchAllCards(): Promise<ApiCard[]> {
     )
   );
   const all = responses.flatMap((r) => r.data ?? []).filter((c: ApiCard) => c.name);
-  
-  // Deduplicar por id
   const seen = new Set<string>();
-  allCardsCache = all.filter((c: ApiCard) => {
-    if (seen.has(c.id)) return false;
-    seen.add(c.id);
-    return true;
-  });
-  
+  allCardsCache = all
+    .filter((c: ApiCard) => {
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
+    })
+    .sort((a: ApiCard, b: ApiCard) => {
+      const dateA = (a as any).release_date ? new Date((a as any).release_date).getTime() : 0;
+      const dateB = (b as any).release_date ? new Date((b as any).release_date).getTime() : 0;
+      return dateB - dateA;
+    });
   return allCardsCache;
 }
+
 type Teams = ApiCard[][];
 const SLOT_LABELS = ["Líder", "Slot 2", "Slot 3", "Slot 4", "Slot 5", "Slot 6", "Slot 7"];
 const RARITIES = ["LR", "UR", "SSR", "SR"];
@@ -108,12 +112,10 @@ export default function HomePage() {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const saveTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // Precarga al montar
   useEffect(() => {
     fetchAllCards().then(() => setPreloading(false));
   }, []);
 
-  // Cargar battlefield al hacer login
   useEffect(() => {
     if (status !== "authenticated") return;
     fetch("/api/battlefield")
@@ -125,7 +127,6 @@ export default function HomePage() {
       .catch(() => {});
   }, [status]);
 
-  // Autosave con debounce 2s
   const autoSave = useCallback(async () => {
     if (status !== "authenticated") return;
     setSaving(true);
@@ -150,7 +151,6 @@ export default function HomePage() {
     saveTimer.current = setTimeout(autoSave, 2000);
   }, [teams, teamNames]);
 
-  // Cerrar dropdown al clicar fuera
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {

@@ -14,8 +14,8 @@ export default function AuthHeader() {
       gap: "12px",
       background: "var(--bg-card)",
     }}>
-      <span style={{ fontSize: "1.5rem" }}>🐉</span>
-      <h1 style={{ fontSize: "1.4rem", color: "var(--gold)" }}>Dokkan Team Builder</h1>
+      <span style={{ fontSize: "1.5rem" }}><img src="/images/unnamed.webp" alt="Descripción" /></span>
+      <h1 style={{ fontSize: "1.4rem", color: "var(--gold)" }}>Battlefield Team Builder</h1>
 
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "12px" }}>
         {status === "loading" && (
